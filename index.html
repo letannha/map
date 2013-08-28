@@ -19,7 +19,7 @@
 
 var onDeviceReady = function() { 
 	
-	var currentPosition = navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError, {maximumAge: 300000, timeout:50000, enableHighAccuracy : true} ); 
+	var currentPosition = navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError); 
 	function onGeoSuccess(position) { 
 		clat = position.coords.latitude; 
 		clng = position.coords.longitude; 
