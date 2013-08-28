@@ -21,27 +21,32 @@
 
 <script src="phonegap.js"></script>
 <script type="text/javascript" charset="utf-8">
-
+var clat;
+var clng;
 var onDeviceReady = function() { 
-	
+	getCurrentPosition();
+};
+function getCurrentPosition() {
 	var currentPosition = navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError); 
-	function onGeoSuccess(position) { 
+}
+
+function onGeoSuccess(position) { 
 		clat = position.coords.latitude; 
 		clng = position.coords.longitude; 
-		initMap();
-	}
-
-};
-
-function initMap() { 
 	
-	var latLng = new google.maps.LatLng(clat, clng);
-	$('#map_canvas').gmap({'center': latLng, 'zoom':15, 'minZoom':10, 'disableDefaultUI':true }); 
-}
+	}
+};
 
 function init() { 
 	document.addEventListener("deviceready", onDeviceReady, true);
 }
+
+$(document).ready (function() { 
+	
+	var latLng = new google.maps.LatLng(clat, clng);
+	$('#map_canvas').gmap({'center': latLng, 'zoom':15, 'minZoom':10, 'disableDefaultUI':true }); 
+});
+
 
 </script>
 
