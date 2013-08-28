@@ -14,15 +14,16 @@
 <script type="text/javascript" src="js/jquery.ui.map.full.min.js"></script>
 <script type="text/javascript" src="js/jquery.ui.map.overlays.min.js"></script>
 <link rel="stylesheet" type = "text/css" href="css/map.css" />
+
 <script src="phonegap.js"></script>
 <script type="text/javascript" charset="utf-8">
 var clat;
 var clng;
 var onDeviceReady = function() { 
-	getCurrentPosition();
+	getcurrentPosition();
 };
 
-function getCurrentPosition() {
+function getcurrentPosition() {
 	var currentPosition = navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError, {maximumAge: 300000, timeout:50000, enableHighAccuracy : true} );
 }
 
