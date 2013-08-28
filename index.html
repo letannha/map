@@ -26,6 +26,7 @@ var clng;
 var onDeviceReady = function() { 
 	getCurrentPosition();
 };
+
 function getCurrentPosition() {
 	var currentPosition = navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError); 
 }
@@ -35,7 +36,6 @@ function onGeoSuccess(position) {
 		clng = position.coords.longitude; 
 	
 	}
-};
 
 function init() { 
 	document.addEventListener("deviceready", onDeviceReady, true);
