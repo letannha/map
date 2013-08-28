@@ -28,7 +28,7 @@ var onDeviceReady = function() {
 };
 
 function getCurrentPosition() {
-	var currentPosition = navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError); 
+	var currentPosition = navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError, {maximumAge: 300000, timeout:50000, enableHighAccuracy : true} );
 }
 
 function onGeoSuccess(position) { 
