@@ -14,7 +14,7 @@
 
 var onDeviceReady = function() { 
 	navigator.splashscreen.hide(); 
-	var currentPosition = navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError, {maximumAge: 300000, timeout:50000, enableHighAccuracy : true} ); 
+	var position = navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError, {maximumAge: 300000, timeout:50000, enableHighAccuracy : true} ); 
 	
 	function onGeoSuccess(position) { 
 		clat = position.coords.latitude; 
