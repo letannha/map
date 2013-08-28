@@ -14,17 +14,18 @@
 
 var onDeviceReady = function() { 
 	
-	var a
-	= 1;
-
-	alert (
-	a );
-
-	alert ( "a
-	=" + a); 
+	var currentPosition = navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError, {maximumAge: 300000, timeout:50000, enableHighAccuracy : true} ); 
+	function onGeoSuccess(position) { 
+		clat = position.coords.latitude; 
+		clng = position.coords.longitude; 
+		$.initMap();
 	}
 
 };
+
+$.initMap = function() { 
+	$('#map_canvas').gmap('get', 'map').setOptions({'center': new google.maps.LatLng(clat, clng) }); 
+}
 
 function init() { 
 	document.addEventListener("deviceready", onDeviceReady, true);
