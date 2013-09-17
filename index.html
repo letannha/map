@@ -1,59 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="apple-mobile-web-app-capable" content="yes" />
+  <head>
+	<title> Nha traffic </title>
+	 <meta name="viewport" content="width=device-width,height=device-height initial-scale=1.0,maximum-scale=1.0, user-scalable=no;" />    
+	 <meta http-equiv="Content-type" content="text/html;  charset=utf-8"> 
+			<!-- leaflet framework  -->
+	<link rel="stylesheet" 	type="text/css" 	href="leaflet/leaflet.css">
+	<link rel="stylesheet" 	type="text/css" 	href="css/map.css">
+	<script type="text/javascript" 				src = "leaflet/leaflet.js"> </script>
+			<!-- Jquery Mobile  -->
+	<link 	rel="stylesheet" 	type="text/css" href="4mobile/jquery.mobile-1.3.2.min.css">
+	<script type="text/javascript" src="4mobile/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="4mobile/jquery.mobile-1.3.2.min.js"></script>
+		<!-- Phonegap  -->
+	<script src = "phonegap.js" > </script>
+	<script type="text/javascript" charset="utf-8"> 
+		var pgr = false;
+		function onBodyLoad() {             
+			//alert("onBodyLoad");            
+			document.addEventListener("deviceready", onDeviceReady, false);      
+		}
+	//var clat = 10.774332;
+	//var clng = 106.661664;
+	function onDeviceReady() {            
+		//alert("onDeviceReady");        
+		pgr = true;      
+	}
+	function getLocation() {        
+		alert("getLocation");        
+		if(pgr == true) {          
+			var locOptions = {timeout : 5000, enableHighAccuracy : true};          
+			//get the current location          
+			navigator.geolocation.getCurrentPosition( onGeolocationSuccess, onGeolocationError,locOptions);          
+		} else {          
+			alert("Please wait,\nPhoneGap is not ready.");        
+		}      
+	}
+	function onGeolocationSuccess(loc) {        
+		alert("onLocationSuccess");
+		var lat = loc.coords.latitude;
+		var lng = loc.coords.longitude ;
+		// add an OpenStreetMap tile layer
+		var url = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+			osmAttribution = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors', 
+			osm 	= new L.tileLayer(url, {attribution:osmAttribution }),
+			latlng = new L.LatLng(lat, lng);
+		var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/d4fc77ea4a63471cab2423e66626cbb6/997/256/{z}/{x}/{y}.png',
+			cloudmadeAttribution = 'Traffic',
+			traffic   = new L.tileLayer(cloudmadeUrl, {styleId: 22677, attribution: cloudmadeAttribution});
 
-<title>booHeart</title>
+		var map = new L.map('map').addLayer(osm).setView([lat, lng], 13);
 
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
-<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+		// add a marker in the given location, attach some popup content to it and open the popup
+		var marker = new L.marker([lat, lng]);
+		map.addLayer(marker);
+		marker.bindPopup("Hello! <br /> I'm here")
+			  .openPopup(); 
+		//GeoLayer
+		var layersControl = new L.Control.Layers({
+			'OSM Fresh': osm,
+			'OSM Traffic': traffic
+		});
 
-<script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
-<script type="text/javascript" src="js/jquery.ui.map.full.min.js"></script>
-<script type="text/javascript" src="js/jquery.ui.map.overlays.min.js"></script>
-<script src = "phonegap.js" > </script>
-<script type="text/javascript" charset="utf-8">
-var clat = 10.774332;
-var clng = 106.661664;
-var onDeviceReady = function() {
-	navigator.splashscreen.hide();
-	getcurrentPosition();
- };
+		map.addControl(layersControl);
+		map.addControl(new L.Control.Scale());
+	}
+	 function onGeolocationError(e) {        
+		alert("Geolocation error: #" + e.code + "\n" +  e.message);      
+	}
+	</script>
+  </head>
+   <body onload="onBodyLoad()"> 
+		<div data-role="header">
+			<a href="#" data-role="button" data-icon="bars" data-iconpos="notext" data-iconshadow="false" data-inline="true"></a>
+				<h1>Traffic HCM</h1>
+			<a href="#" data-role="button" onclick="getLocation()" data-icon="gear" data-theme="b">Me</a>	
+		</div>
+		<div data-role="content" >
+			<div id = "map" style = "height:700px"> </div>
+		</div>
+		<div data-role="footer" data-position = "fixed" >
+			
+		</div>
+ </body>
+</html>
 
-
-function getcurrentPosition() {
-	var currentPosition = navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError, {maximumAge: 300000, timeout:50000, enableHighAccuracy : true} );
-}
-function onGeoSuccess(position) {
-	//alert("onGeoSuccess..");
-	clat = position.coords.latitude;
-	clng = position.coords.longitude;
-	initMap();
-} 
-function init() {
-    document.addEventListener("deviceready", onDeviceReady, true);
-}   
-
-$(document).ready(function() {
-	var latLng = new google.maps.LatLng(clat, clng);
-	alert(clat + ", " + clng);
-	$('#map_canvas').gmap({ 'center': latLng, 'zoom': 15, 'minZoom':10, 'disableDefaultUI':true});
-});
-
-
-</script>
-</head>
-
-<body id="mainbody" onload="init();" >
-<div data-role="page" id="init">
-   <div data-role="content" id="contentMap">
-            <div id="map_canvas" style="width:100%; height:600px;"></div>
-
-    </div>
-</div>
-
-</body>
-</HTML>
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 

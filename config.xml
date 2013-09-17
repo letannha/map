@@ -3,17 +3,17 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.actsone.booheart"
-        version   = "2.9.0">
+        id        = "com.traffic.nha"
+        version   = "1.0.0">
 
-    <name>Nha's first app</name>
+    <name>Nha's traffic app</name>
 
     <description>
-        Phonegap api testing app.
+        LVTN
     </description>
 
-    <author href="http://actsone.co.kr" email="support@actsone.co.kr">
-        ActsOne Team
+    <author href="http://traffic.hcmut.edu.vn/" email="tannha91@live.com">
+        Nha Team
     </author> 
 
     <!--
