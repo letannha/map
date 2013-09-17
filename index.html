@@ -29,7 +29,7 @@
 	function getLocation() {        
 		alert("getLocation");        
 		if(pgr == true) {          
-			var locOptions = {timeout : 5000, enableHighAccuracy : true};          
+			var locOptions = {timeout : 5000, enableHighAccuracy : false};          
 			//get the current location          
 			navigator.geolocation.getCurrentPosition( onGeolocationSuccess, onGeolocationError,locOptions);          
 		} else {          
